@@ -18,6 +18,14 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs', 'src/main/jniLibs']
+        }
+    }
     namespace "com.adelant.capacitorbrotherprinter"
     compileSdk project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 35
     defaultConfig {
@@ -49,7 +57,7 @@ repositories {
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
     implementation project(':capacitor-android')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     testImplementation "junit:junit:$junitVersion"
